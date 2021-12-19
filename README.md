@@ -5,7 +5,7 @@
 
 ### Objetivo
 
-1. Criar um clone do Frogger em Pygame... 
+1. Criar um clone do jogo Frogger em Pygame. 
 
 ### Descrição
 
@@ -22,10 +22,10 @@ A rã move-se apenas em 4 direções, sendo estas cima, baixo, esquerda e direit
 
 ### Tarefas
 
-1. Criar as imagens dos objetos e background
-2. Movimentar a rã
-3. Criar obstáculos móveis
-4. Alinhar os objetos em relação ao background
+1. Criar as imagens dos objetos e background (Done)
+2. Alinhar os objetos em relação ao background (Done)
+3. Movimentar a rã
+4. Criar obstáculos móveis
 5. Definir as condições de vitória e derrota do jogo
 
-- Atualizado a última vez em 17/12/2021!
+- Atualizado a última vez em 19/12/2021!
