@@ -27,6 +27,6 @@ A rã move-se apenas em 4 direções, sendo estas cima, baixo, esquerda e direit
 3. Movimentar a rã ✔
 4. Criar obstáculos móveis ✔
 5. Criar as colisões ✔
-6. Definir as condições de vitória e derrota do jogo
+6. Definir as condições de vitória e derrota do jogo ✔
 
 - Atualizado a última vez em 19/12/2021!
