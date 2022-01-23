@@ -15,17 +15,15 @@ font = pygame.font.Font("font/EBGaramond.ttf", 68)
 font_small = pygame.font.Font("font/EBGaramond.ttf", 34)
 font_smaller = pygame.font.Font("font/EBGaramond.ttf", 20)
 
-# Carregar imagens
+# Load Images
 
 road_img = pygame.image.load('images/road.png').convert()
 car_left_img = pygame.image.load('images/car_left.png').convert()
 car_left_img.set_colorkey((255, 0, 255))
 car_right_img = pygame.image.load('images/car_right.png').convert()
 car_right_img.set_colorkey((255, 0, 255))
-frog_img = pygame.image.load('images/frog.png').convert()
-frog_img.set_colorkey((255, 0, 255))
-
-# Funções
+frog_src = pygame.image.load('images/frog.png').convert()
+frog_src.set_colorkey((255, 0, 255))
 
 def car_mov_right(coord_x, dt, faixa):
     for i in range(len(coord_x)):
@@ -48,7 +46,7 @@ def collision(frog, cars):
     return False
 
 running = True
-restart = True # Começa como True para iniciar o jogo
+restart = True # Starts True to initialize the game
 lives = 3
 while running:
     dt = clock.tick(30)
@@ -58,9 +56,11 @@ while running:
     ######    Restart    ######
 
     while restart:
+        frog_img = frog_src
+
         win, lose = False, False
 
-        # Coordenadas
+        # Coordinates
 
         road_x, road_y = 0, 50
         car_right_x, car_right_y = [200, 600, 1000], 135
@@ -69,49 +69,50 @@ while running:
         car2_left_x, car2_left_y = [350, 650, 950, 1250], 360
         frog_x, frog_y = 500, 455
 
-        # Constante das velocidades para os carros (uma velocidade por cada faixa)
+        # Velocity (upper lane to lower lane)
 
         car_speed = [0.22, 0.16, 0.125, 0.1]
         
         restart = False
 
-    ######    Eventos    ######
+    ######    Events    ######
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-
-            # Fazer rotação da rã
-
             if event.key == pygame.K_UP and alive and not win:
                 if frog_y - 80 > 0:
                     frog_y -= 80
+                    frog_img = pygame.transform.rotate(frog_src, 0)
             elif event.key == pygame.K_DOWN and alive and not win:
                 if frog_y + 80 < 500:
                     frog_y += 80
+                    frog_img = pygame.transform.rotate(frog_src, 180)
             elif event.key == pygame.K_LEFT and alive and not win:
                 if frog_x - 60 > 0:
                     frog_x -= 60
+                    frog_img = pygame.transform.rotate(frog_src, 90)
             elif event.key == pygame.K_RIGHT and alive and not win:
                 if frog_x + 60 < 980:
                     frog_x += 60
+                    frog_img = pygame.transform.rotate(frog_src, 270)
             elif event.key == pygame.K_ESCAPE:
                 running = False
             elif event.key == pygame.K_r:
                 restart = True
                 lives = 3
 
-    ######    Lógica     ######
+    ######    Logic     ######
 
-    # Movimento dos carros
+    # Car movement
 
     car_mov_right(car_right_x, dt, 0)
     car_mov_left(car_left_x, dt, 1)
     car_mov_right(car2_right_x, dt, 2)
     car_mov_left(car2_left_x, dt, 3)
 
-    # Update da Hitbox
+    # Hitbox Update
 
     frog_hitbox = (frog_x, frog_y, 50, 35)
 
@@ -127,7 +128,7 @@ while running:
         car_left_hitbox.append((car_left_x[i], car_left_y, 107, 55))
         car2_left_hitbox.append((car2_left_x[i], car2_left_y, 107, 55))
 
-    # Condições de vitória e derrota
+    # Winning and losing conditions
 
     if frog_y == 135:
         lose = collision(frog_hitbox, car_right_hitbox)
@@ -144,9 +145,9 @@ while running:
         lives -= 1
         restart = True
 
-    ######     Ecrã      ######
+    ######     Screen      ######
 
-    # Ecrã, background e rã
+    # Screen, background and frog
 
     screen.fill(pygame.Color('black'))
     screen.blit(road_img, (road_x, road_y))
@@ -162,17 +163,17 @@ while running:
     text = font_smaller.render("ESC to exit", True, (255, 255, 255))
     screen.blit(text, (700, 15))
 
-    # Primeira faixa e Terceira Faixa
+    # First and third lane
     for i in range(len(car_right_x)):
         screen.blit(car_right_img, (car_right_x[i], car_right_y))
         screen.blit(car_right_img, (car2_right_x[i], car2_right_y))
     
-    # Segunda Faixa e Quarta Faixa
+    # Second and forth lane
     for i in range(len(car_left_x)):
         screen.blit(car_left_img, (car_left_x[i], car_left_y))
         screen.blit(car_left_img, (car2_left_x[i], car2_left_y))
 
-    # Desenhar a Hitbox (para debug)
+    # Hitbox debugging
     '''
     pygame.draw.rect(screen, (255, 0, 0), frog_hitbox, 2)
     
@@ -184,7 +185,7 @@ while running:
         pygame.draw.rect(screen, (255, 0, 0), car_left_hitbox[i], 2)
         pygame.draw.rect(screen, (255, 0, 0), car2_left_hitbox[i], 2)
     '''
-    # Vitória e derrota
+    # Winning and losing
 
     if win:
         screen.fill((0, 0, 0))
