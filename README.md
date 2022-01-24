@@ -29,4 +29,4 @@ A rã move-se apenas em 4 direções, sendo estas cima, baixo, esquerda e direit
 5. Criar as colisões ✔
 6. Definir as condições de vitória e derrota do jogo ✔
 
-- Atualizado a última vez em 19/12/2021!
+- Atualizado a última vez em 23/01/2022!
